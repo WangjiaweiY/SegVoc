@@ -20,7 +20,7 @@ import segmentation_models_pytorch as smp
 # 检查是否有GPU
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-batch_size, crop_size = 32, (320, 480)
+batch_size, crop_size = 16, (320, 480)
 train_iter, test_iter = load_data_voc(batch_size, crop_size)
 test_images, test_labels = read_voc_images(voc_dir, False)
 test_imgs = []
@@ -36,10 +36,29 @@ test_imgs = []
 
 # net = U_Net()
 
-net = smp.Unet(encoder_name="resnet34",       
-                 encoder_weights="imagenet",     
-                 in_channels=3,                  
-                 classes=21) 
+# net = smp.Unet(encoder_name="resnet34",       
+#                  encoder_weights="imagenet",     
+#                  in_channels=3,                  
+#                  classes=21) 
+
+net = smp.Unet(
+    encoder_name="resnet34",            # 使用的 backbone，例如 resnet34
+    encoder_weights="imagenet",         # 使用 imagenet 预训练权重
+    in_channels=3,                      # 输入通道数，RGB 图像为 3
+    classes=21,                         # 输出通道数，对应分类数（VOC 数据集为 21）
+    decoder_attention_type="scse"       # 启用 scSE 注意力模块
+)
+
+# 加载编码器的权重
+pretrained_dict = torch.load("U_Netmodel.pth")
+model_dict = net.state_dict()
+
+# 保留匹配编码器部分的权重
+pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict and 'encoder' in k}
+model_dict.update(pretrained_dict)
+net.load_state_dict(model_dict)
+
+# net.load_state_dict(torch.load("U_Netmodel.pth"))
 
 def predict(img):
     X = train_iter.dataset.normalize_image(img).unsqueeze(0)
