@@ -4,29 +4,29 @@
 
 FCN：
 
-![FCN_acc_loss](answer\FCN\FCN_acc_loss.png)
+![FCN_acc_loss](./answer/FCN/FCN_acc_loss.png)
 
-Unet：![Unet_acc_loss](answer\U_Net\Unet_acc_loss.png)
+Unet：![Unet_acc_loss](./answer/U_Net/Unet_acc_loss.png)
 
 ## 前后对比
 
 FCN：
 
-![FCN前后对比](answer\FCN\FCN前后对比.png)
+![FCN前后对比](./answer/FCN/FCN前后对比.png)
 
 Unet：
 
-![Unet前后对比](answer\U_Net\Unet前后对比.png)
+![Unet前后对比](./answer/U_Net/Unet前后对比.png)
 
 ## 最终效果示例
 
 FCN:
 
-![FCN最终效果示例](answer\FCN\FCN最终效果示例.png)
+![FCN最终效果示例](./answer/FCN/FCN最终效果示例.png)
 
 Unet:
 
-![Unet最终效果示例](answer\U_Net\Unet最终效果示例.png)
+![Unet最终效果示例](./answer/U_Net/Unet最终效果示例.png)
 
 |          | FCN   | UNet  |
 | -------- | ----- | ----- |
