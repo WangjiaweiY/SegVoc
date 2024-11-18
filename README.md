@@ -38,11 +38,20 @@
 
 **加权输出：** 用注意力权重对编码器特征进行加权，过滤掉无关区域。
 
+其中解码器生成的g提供全局语义信息，x提供全图的细节信息。
+
+`x` 是一张高清晰的地图，其中标注了所有地形（建筑、山脉、河流等），但你不知道哪些对你有用。
+
+`g` 是一张低分辨率的热力图，它粗略地指出了哪里可能有你需要寻找的“目标”（比如金矿）
+Attention Gate 就像是一个指南针，结合这两张图，告诉你“高清地图上这些区域需要你仔细看，其他地方忽略。
+
+根据公式ψ=σ(Wψ(q+k)+bψ)生成最终的权重矩阵，权重矩阵中较大的值也就是应当关注的区域。
+
 最终将经过attention gate生成的结果与解码阶段上采样的特征concat即可。
 
 结构如下：
 
-![](./img/attentionUNet/attentionUnetStructure.png)
+![attentionUnetStructure](./img/attentionUNet/attentionUnetStructure.png)
 
 代码示例：
 
